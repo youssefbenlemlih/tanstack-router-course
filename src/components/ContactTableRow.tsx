@@ -1,7 +1,8 @@
+import { ActionIcon, Table } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { ContactOverview } from "../api/client";
-import { ActionIcon, Anchor, Table } from "@mantine/core";
 import { IconEdit } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
+import { ContactOverview } from "../api/client";
 import { useOptimisticContactName } from "../api/hooks";
 
 type ContactTableRowProps = {
@@ -15,13 +16,15 @@ export const ContactTableRow = ({
   openContactEditDialog,
 }: ContactTableRowProps) => {
   const { hovered, ref } = useHover();
-  const optimisticContactName = useOptimisticContactName(contact.id)
+  const optimisticContactName = useOptimisticContactName(contact.id);
   return (
     <Table.Tr ref={ref}>
       <Table.Td>
-        <Anchor onClick={() => openContactDetailsDialog(contact.id)}>
-          {optimisticContactName ? optimisticContactName : contact.firstName+ " "+contact.lastName} 
-        </Anchor>
+        <Link to="/contacts/$contactId" params={{ contactId: contact.id }}>
+          {optimisticContactName
+            ? optimisticContactName
+            : contact.firstName + " " + contact.lastName}
+        </Link>
       </Table.Td>
       <Table.Td>
         <ActionIcon
