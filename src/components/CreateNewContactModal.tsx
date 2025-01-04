@@ -10,7 +10,6 @@ import {
 import { IconHome, IconPhone } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useCreateContact } from "../api/hooks";
-import { useNavigate } from "@tanstack/react-router";
 
 type CreateNewContactModalProps = {
   isOpen: boolean;
@@ -29,9 +28,7 @@ export const CreateNewContactModal = ({
   });
   const { mutate, isPending, error, reset } = useCreateContact((contact) => {
     close();
-    navigate({ to: `/$contactId`, params: { contactId: contact.id } });
   });
-  const navigate = useNavigate();
   useEffect(() => {
     if (isOpen) {
       reset();

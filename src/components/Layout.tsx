@@ -1,6 +1,5 @@
 import { AppShell, Flex, Title } from "@mantine/core";
 import { IconAddressBook } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
 
 type LayoutProps = {
@@ -15,9 +14,7 @@ export const Layout = ({ children, rightSection, title }: LayoutProps) => {
       <AppShell.Header>
         <Flex align={"center"} p="sm" justify={"space-between"}>
           <Flex align={"center"} gap="xs">
-            <Link to="/">
-              <IconAddressBook />
-            </Link>
+            <IconAddressBook />
             <Title order={2}>{title}</Title>
           </Flex>
           {rightSection}
