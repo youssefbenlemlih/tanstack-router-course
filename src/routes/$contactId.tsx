@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContactDetails } from "../../components/ContactDetails";
+import { ContactDetails } from "../components/ContactDetails";
 
-export const Route = createFileRoute("/contacts/$contactId")({
+export const Route = createFileRoute("/$contactId")({
   component: RouteComponent,
 });
 

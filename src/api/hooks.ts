@@ -19,15 +19,15 @@ export const useContactDetails = (contactId: string | undefined) =>
     queryFn: () => client.getContact(contactId!),
     enabled: !!contactId,
   });
-export const useCreateContact = (onSuccess?: () => void) => {
+export const useCreateContact = (onSuccess?: (contact:Contact) => void) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (contact: CreateContactRequest) => client.createContact(contact),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["contacts"],
       });
-      onSuccess?.();
+      onSuccess?.(data);
     },
   });
 };

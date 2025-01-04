@@ -11,27 +11,27 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as HelloImport } from './routes/hello'
+import { Route as ContactIdImport } from './routes/$contactId'
 import { Route as IndexImport } from './routes/index'
-import { Route as ContactsIndexImport } from './routes/contacts/index'
-import { Route as ContactsContactIdImport } from './routes/contacts/$contactId'
 
 // Create/Update Routes
+
+const HelloRoute = HelloImport.update({
+  id: '/hello',
+  path: '/hello',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ContactIdRoute = ContactIdImport.update({
+  id: '/$contactId',
+  path: '/$contactId',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ContactsIndexRoute = ContactsIndexImport.update({
-  id: '/contacts/',
-  path: '/contacts/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ContactsContactIdRoute = ContactsContactIdImport.update({
-  id: '/contacts/$contactId',
-  path: '/contacts/$contactId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,18 +46,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/contacts/$contactId': {
-      id: '/contacts/$contactId'
-      path: '/contacts/$contactId'
-      fullPath: '/contacts/$contactId'
-      preLoaderRoute: typeof ContactsContactIdImport
+    '/$contactId': {
+      id: '/$contactId'
+      path: '/$contactId'
+      fullPath: '/$contactId'
+      preLoaderRoute: typeof ContactIdImport
       parentRoute: typeof rootRoute
     }
-    '/contacts/': {
-      id: '/contacts/'
-      path: '/contacts'
-      fullPath: '/contacts'
-      preLoaderRoute: typeof ContactsIndexImport
+    '/hello': {
+      id: '/hello'
+      path: '/hello'
+      fullPath: '/hello'
+      preLoaderRoute: typeof HelloImport
       parentRoute: typeof rootRoute
     }
   }
@@ -67,42 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/contacts/$contactId': typeof ContactsContactIdRoute
-  '/contacts': typeof ContactsIndexRoute
+  '/$contactId': typeof ContactIdRoute
+  '/hello': typeof HelloRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/contacts/$contactId': typeof ContactsContactIdRoute
-  '/contacts': typeof ContactsIndexRoute
+  '/$contactId': typeof ContactIdRoute
+  '/hello': typeof HelloRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/contacts/$contactId': typeof ContactsContactIdRoute
-  '/contacts/': typeof ContactsIndexRoute
+  '/$contactId': typeof ContactIdRoute
+  '/hello': typeof HelloRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contacts/$contactId' | '/contacts'
+  fullPaths: '/' | '/$contactId' | '/hello'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contacts/$contactId' | '/contacts'
-  id: '__root__' | '/' | '/contacts/$contactId' | '/contacts/'
+  to: '/' | '/$contactId' | '/hello'
+  id: '__root__' | '/' | '/$contactId' | '/hello'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ContactsContactIdRoute: typeof ContactsContactIdRoute
-  ContactsIndexRoute: typeof ContactsIndexRoute
+  ContactIdRoute: typeof ContactIdRoute
+  HelloRoute: typeof HelloRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ContactsContactIdRoute: ContactsContactIdRoute,
-  ContactsIndexRoute: ContactsIndexRoute,
+  ContactIdRoute: ContactIdRoute,
+  HelloRoute: HelloRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +116,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/contacts/$contactId",
-        "/contacts/"
+        "/$contactId",
+        "/hello"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/contacts/$contactId": {
-      "filePath": "contacts/$contactId.tsx"
+    "/$contactId": {
+      "filePath": "$contactId.tsx"
     },
-    "/contacts/": {
-      "filePath": "contacts/index.tsx"
+    "/hello": {
+      "filePath": "hello.tsx"
     }
   }
 }

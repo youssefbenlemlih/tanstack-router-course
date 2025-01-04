@@ -5,12 +5,10 @@ import { Spinner } from "./Spinner";
 import { ContactTableRow } from "./ContactTableRow";
 
 type ContactsTableProps = {
-  openContactDetailsDialog: (contactId: string) => void;
   openContactEditDialog: (contactId: string) => void;
 };
 
 export const ContactsTable = ({
-  openContactDetailsDialog,
   openContactEditDialog,
 }: ContactsTableProps) => {
   const [page, setPage] = useState(1);
@@ -40,7 +38,6 @@ export const ContactsTable = ({
         <Table.Tbody>
           {data?.contacts.map((contact) => (
             <ContactTableRow
-              openContactDetailsDialog={openContactDetailsDialog}
               openContactEditDialog={openContactEditDialog}
               contact={contact}
               key={contact.id}
