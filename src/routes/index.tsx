@@ -1,14 +1,24 @@
-import { createFileRoute } from '@tanstack/react-router'
-import App from '../App';
+import { createFileRoute } from "@tanstack/react-router";
+import * as z from "zod";
+import ContactsPage from "../ContactsPage";
 
-export const Route = createFileRoute('/')({
+const searchParametersSchema = z.object({
+  editContactId: z.string().uuid().optional(),
+});
+export const Route = createFileRoute("/")({
   component: RouteComponent,
-})
+  validateSearch: searchParametersSchema,
+});
 
 function RouteComponent() {
+  const { editContactId } = Route.useSearch();
+  const navigate = Route.useNavigate();
   return (
-    <div>
-      <App />
-    </div>
+    <ContactsPage
+      editContactId={editContactId}
+      setEditContactId={(id) => {
+        navigate({ search: { editContactId: id } });
+      }}
+    />
   );
 }

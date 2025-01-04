@@ -8,11 +8,14 @@ import { ContactsTable } from "./components/ContactsTable";
 import { EditContactModal } from "./components/EditContactModal";
 import { useContactsCount } from "./api/hooks";
 
-function App() {
+type ContactsPageProps = {
+  editContactId: string | undefined;
+  setEditContactId: (id: string | undefined) => void;
+};
+function ContactsPage({editContactId, setEditContactId }:ContactsPageProps) {
   const [isCreateNewContactModalOpen, setIsCreateNewContactModalOpen] =
     useState(false);
   const [selectedContactId, setSelectedContactId] = useState<string>();
-  const [editContactId, setEditContactId] = useState<string>();
   const { data: count } = useContactsCount();
   return (
     <Layout
@@ -27,10 +30,7 @@ function App() {
         </Button>
       }
     >
-      <ContactsTable
-        openContactDetailsDialog={setSelectedContactId}
-        openContactEditDialog={setEditContactId}
-      />
+      <ContactsTable openContactEditDialog={setEditContactId} />
       <CreateNewContactModal
         isOpen={isCreateNewContactModalOpen}
         close={() => setIsCreateNewContactModalOpen(false)}
@@ -47,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default ContactsPage;

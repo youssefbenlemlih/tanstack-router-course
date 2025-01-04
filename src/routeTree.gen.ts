@@ -11,9 +11,23 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as HelloImport } from './routes/hello'
+import { Route as ContactIdImport } from './routes/$contactId'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const HelloRoute = HelloImport.update({
+  id: '/hello',
+  path: '/hello',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ContactIdRoute = ContactIdImport.update({
+  id: '/$contactId',
+  path: '/$contactId',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,6 +46,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/$contactId': {
+      id: '/$contactId'
+      path: '/$contactId'
+      fullPath: '/$contactId'
+      preLoaderRoute: typeof ContactIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/hello': {
+      id: '/hello'
+      path: '/hello'
+      fullPath: '/hello'
+      preLoaderRoute: typeof HelloImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$contactId': typeof ContactIdRoute
+  '/hello': typeof HelloRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$contactId': typeof ContactIdRoute
+  '/hello': typeof HelloRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/$contactId': typeof ContactIdRoute
+  '/hello': typeof HelloRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/$contactId' | '/hello'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/$contactId' | '/hello'
+  id: '__root__' | '/' | '/$contactId' | '/hello'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactIdRoute: typeof ContactIdRoute
+  HelloRoute: typeof HelloRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactIdRoute: ContactIdRoute,
+  HelloRoute: HelloRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/$contactId",
+        "/hello"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/$contactId": {
+      "filePath": "$contactId.tsx"
+    },
+    "/hello": {
+      "filePath": "hello.tsx"
     }
   }
 }

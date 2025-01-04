@@ -3,6 +3,7 @@ import { useHover } from "@mantine/hooks";
 import { IconEdit } from "@tabler/icons-react";
 import { ContactOverview } from "../api/client";
 import { useOptimisticContactName } from "../api/hooks";
+import { CustomLink } from "./CustomLink";
 
 type ContactTableRowProps = {
   contact: ContactOverview;
@@ -17,9 +18,11 @@ export const ContactTableRow = ({
   return (
     <Table.Tr ref={ref}>
       <Table.Td>
+        <CustomLink to={"/$contactId"} params={{ contactId: contact.id }}>
           {optimisticContactName
             ? optimisticContactName
             : contact.firstName + " " + contact.lastName}
+        </CustomLink>
       </Table.Td>
       <Table.Td>
         <ActionIcon
